@@ -1,0 +1,52 @@
+{
+  "name": "mambos-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sistema de gestión para restaurantes - Frontend",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "setup:env": "chmod +x scripts/generate-secure-env.sh && ./scripts/generate-secure-env.sh",
+    "start:laptop": "chmod +x scripts/start-laptop-backend.sh && ./scripts/start-laptop-backend.sh",
+    "security:check": "git status && echo '⚠️ Verificar que no hay archivos .env en staging'",
+    "deploy:prepare": "npm run lint && npm run type-check && npm run build && npm run security:check"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "axios": "^1.10.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "socket.io-client": "^4.7.5",
+    "tailwindcss": "^4.1.10"
+  },
+  "keywords": [
+    "restaurant",
+    "pos",
+    "management", 
+    "react",
+    "typescript",
+    "vite",
+    "tailwind"
+  ],
+  "author": "Mambos Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
+    "vite": "^6.3.5"
+  }
+}

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <!-- === ICONOS Y MANIFEST === -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- === META TAGS BÁSICOS === -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Sistema de gestión para restaurantes - Acceso para trabajadores" />
+    <meta name="keywords" content="restaurante, gestión, pedidos, menú, pos" />
+    <meta name="author" content="Mambos Team" />
+    
+    <!-- === PWA META TAGS === -->
+    <meta name="theme-color" content="#1f2937" />
+    <meta name="background-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Mambos" />
+    <meta name="application-name" content="Mambos" />
+    
+    <!-- === ICONOS APPLE === -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+    
+    <!-- === META TAGS SOCIALES === -->
+    <meta property="og:title" content="Mambos - Sistema de Gestión" />
+    <meta property="og:description" content="Sistema moderno de gestión para restaurantes" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icons/icon-512x512.png" />
+    
+    <!-- === OPTIMIZACIÓN MÓVIL === -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-TileColor" content="#1f2937" />
+    
+    <!-- === TÍTULO === -->
+    <title>Mambos - Sistema de Gestión</title>
+    
+    <!-- === ESTILOS CRÍTICOS === -->
+    <style>
+      /* Loading screen mientras carga la app */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        z-index: 9999;
+      }
+      
+      .loading-logo {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: pulse 2s infinite;
+      }
+      
+      .loading-text {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 2rem;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Ocultar loading cuando la app esté lista */
+      .app-loaded #loading-screen {
+        display: none;
+      }
+      
+      /* Prevenir zoom en iOS */
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="number"],
+      textarea,
+      select {
+        font-size: 16px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- === PANTALLA DE CARGA === -->
+    <div id="loading-screen">
+      <div class="loading-logo">🍽️</div>
+      <div class="loading-text">Mambos</div>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- === APP PRINCIPAL === -->
+    <div id="root"></div>
+    
+    <!-- === SCRIPTS === -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- === SERVICE WORKER === -->
+    <script>
+      // Registrar Service Worker para PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('✅ SW registrado:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('❌ SW falló:', error);
+            });
+        });
+      }
+      
+      // Ocultar pantalla de carga cuando React esté listo
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          document.body.classList.add('app-loaded');
+        }, 1000);
+      });
+      
+      // Prevenir zoom en doble tap (iOS)
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      
+      // Banner de instalación PWA
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Mostrar banner personalizado después de 30 segundos
+        setTimeout(() => {
+          showInstallPrompt();
+        }, 30000);
+      });
+      
+      function showInstallPrompt() {
+        if (deferredPrompt && !window.localStorage.getItem('pwa-dismissed')) {
+          const banner = document.createElement('div');
+          banner.innerHTML = `
+            <div style="
+              position: fixed;
+              bottom: 20px;
+              left: 20px;
+              right: 20px;
+              background: rgba(0,0,0,0.9);
+              color: white;
+              padding: 1rem;
+              border-radius: 8px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              z-index: 10000;
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            ">
+              <div>
+                <strong>📱 Instalar Mambos</strong><br>
+                <small>Accede más rápido como una app</small>
+              </div>
+              <div>
+                <button onclick="installPWA()" style="
+                  background: #667eea;
+                  color: white;
+                  border: none;
+                  padding: 8px 16px;
+                  border-radius: 4px;
+                  margin-right: 8px;
+                  cursor: pointer;
+                ">Instalar</button>
+                <button onclick="dismissInstall()" style="
+                  background: transparent;
+                  color: white;
+                  border: 1px solid #666;
+                  padding: 8px 16px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                ">×</button>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(banner);
+          window.installBanner = banner;
+        }
+      }
+      
+      function installPWA() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('PWA instalada');
+            }
+            deferredPrompt = null;
+            if (window.installBanner) {
+              window.installBanner.remove();
+            }
+          });
+        }
+      }
+      
+      function dismissInstall() {
+        window.localStorage.setItem('pwa-dismissed', 'true');
+        if (window.installBanner) {
+          window.installBanner.remove();
+        }
+      }
+    </script>
+  </body>
+</html>

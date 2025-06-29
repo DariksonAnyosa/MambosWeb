@@ -1,0 +1,137 @@
+# ===================================================================
+# ARCHIVOS SENSIBLES - NUNCA SUBIR A GITHUB
+# ===================================================================
+# 🔐 CONFIGURACIÓN DE SEGURIDAD MÁXIMA
+
+# === ARCHIVOS DE ENTORNO (CONTIENEN CLAVES SECRETAS) ===
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# === ARCHIVOS ESPECÍFICOS POR ENTORNO ===
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production.secure
+
+# === BASE DE DATOS (CONTIENE DATOS SENSIBLES) ===
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
+data/
+backups/
+
+# === CLAVES Y CERTIFICADOS ===
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+keys/
+private/
+cert/
+ssl/
+
+# === ARCHIVOS DE SESIÓN Y TOKENS ===
+sessions/
+tokens/
+*.session
+auth-config.json
+
+# === LOGS (PUEDEN CONTENER INFORMACIÓN SENSIBLE) ===
+*.log
+logs/
+audit.log
+error.log
+access.log
+
+# === CONFIGURACIONES LOCALES ===
+config/local.js
+config/production.js
+local-config.*
+
+# === BACKUPS Y DUMPS ===
+backup/
+*.backup
+*.dump
+*.sql
+db-backup-*
+
+# === ARCHIVOS TEMPORALES DE LIMPIEZA ===
+.temp_cleanup/
+ARCHIVOS_ELIMINADOS.txt
+FRONTEND_LIMPIEZA.txt
+backend/ARCHIVOS_ELIMINADOS.txt
+
+# === DEPENDENCIAS ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# === BUILDS Y DISTRIBUCIÓN ===
+dist/
+build/
+.vite/
+coverage/
+
+# === SISTEMA OPERATIVO ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# === EDITORES ===
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vim
+.vimp
+
+# === SERVICIOS DE DEPLOY ===
+.vercel
+.railway/
+.netlify/
+.firebase/
+
+# === TESTING Y COVERAGE ===
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+
+# === ARCHIVOS DE CONFIGURACIÓN ESPECÍFICOS ===
+.env.vercel
+.env.railway
+.env.production
+pm2.config.js
+docker-compose.override.yml
+
+# === ARCHIVOS GENERADOS AUTOMÁTICAMENTE ===
+.eslintcache
+*.tsbuildinfo
+
+# === ARCHIVOS DE ANÁLISIS ===
+.analytics/
+stats.json
+bundle-analyzer-report.html
+
+# ===================================================================
+# IMPORTANTE: Verificar siempre antes de hacer commit que no se
+# suban archivos sensibles. Usar: git status y git diff --cached
+# ===================================================================
