@@ -1,5 +1,5 @@
-import { apiClient, ApiResponse, PaginatedResponse } from './api';
-import { Order, OrderItem } from '../types';
+import { apiClient, type ApiResponse, type PaginatedResponse } from './api';
+import type { Order, OrderItem } from '../types';
 
 // Interfaces específicas para pedidos
 export interface CreateOrderRequest {
@@ -162,7 +162,7 @@ export const ordersService = {
         ...filters,
         responseType: 'blob'
       });
-      return response.data;
+      return response.data as Blob;
     } catch (error) {
       console.error('Error exporting orders to CSV:', error);
       throw error;

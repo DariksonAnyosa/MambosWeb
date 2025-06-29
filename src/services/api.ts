@@ -40,7 +40,7 @@ api.interceptors.request.use(
     }
     
     // Log de requests en desarrollo
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log(`🚀 ${config.method?.toUpperCase()} ${config.url}`, config.data);
     }
     
@@ -56,7 +56,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => {
     // Log de responses en desarrollo
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log(`✅ ${response.status} ${response.config.url}`, response.data);
     }
     

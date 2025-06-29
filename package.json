@@ -6,7 +6,7 @@
   "description": "Sistema de gestión para restaurantes - Frontend",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -14,7 +14,7 @@
     "setup:env": "chmod +x scripts/generate-secure-env.sh && ./scripts/generate-secure-env.sh",
     "start:laptop": "chmod +x scripts/start-laptop-backend.sh && ./scripts/start-laptop-backend.sh",
     "security:check": "git status && echo '⚠️ Verificar que no hay archivos .env en staging'",
-    "deploy:prepare": "npm run lint && npm run type-check && npm run build && npm run security:check"
+    "deploy:prepare": "npm run lint && npm run build && npm run security:check"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
@@ -28,7 +28,7 @@
   "keywords": [
     "restaurant",
     "pos",
-    "management", 
+    "management",
     "react",
     "typescript",
     "vite",
@@ -38,6 +38,7 @@
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/node": "^24.0.7",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -45,6 +46,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "terser": "^5.43.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"

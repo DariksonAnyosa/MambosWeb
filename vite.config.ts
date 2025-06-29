@@ -25,7 +25,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
+    minify: 'esbuild',
     target: 'es2020',
     rollupOptions: {
       output: {
@@ -44,8 +44,8 @@ export default defineConfig({
   
   // PWA y Service Worker
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    '__PWA_VERSION__': JSON.stringify(process.env.npm_package_version || '1.0.0')
+    'process.env.NODE_ENV': JSON.stringify('development'),
+    '__PWA_VERSION__': JSON.stringify('1.0.0')
   },
   
   // Variables de entorno
@@ -53,6 +53,6 @@ export default defineConfig({
   
   // Optimizaciones
   esbuild: {
-    drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
+    drop: [],
   },
 });
