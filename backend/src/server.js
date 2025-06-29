@@ -29,7 +29,7 @@ const server = createServer(app);
 // Configurar Socket.IO con CORS para internet
 const allowedOrigins = process.env.FRONTEND_URL === '*' 
   ? true // Permitir cualquier origen (solo para desarrollo)
-  : [process.env.FRONTEND_URL || "http://localhost:5173"];
+  : process.env.FRONTEND_URL.split(',').map(url => url.trim());
 
 const io = new SocketIO(server, {
   cors: {
@@ -57,7 +57,7 @@ app.use(validateOrigin);
 // CORS para internet
 const corsOrigins = process.env.FRONTEND_URL === '*' 
   ? true // Permitir cualquier origen (cuidado en producción)
-  : [process.env.FRONTEND_URL || "http://localhost:5173"];
+  : process.env.FRONTEND_URL.split(',').map(url => url.trim());
 
 app.use(cors({
   origin: corsOrigins,

@@ -76,6 +76,18 @@ const createTablesAndSampleData = async () => {
       )
     `);
 
+    // === TABLA DE SESIONES ACTIVAS (SOCKET.IO) ===
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS active_sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        socket_id TEXT NOT NULL,
+        connected_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        last_activity DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+      )
+    `);
+
     // === DATOS DE EJEMPLO ===
     console.log('👤 Creando usuario administrador de ejemplo...');
     
